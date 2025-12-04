@@ -1,0 +1,2 @@
+instancia,seed,mu,lambd,taxa_mutacao,taxa_busca_local,iter_sem_melhora_max,custo,tempo_execucao_segundos,memoria_usada_MB,melhor_solucao
+Sko64,42,5,30,0.4,0.4,5,49554,600.0,107.94,"[35, 11, 28, 8, 13, 57, 25, 49, 40, 33, 9, 51, 41, 48, 62, 17, 45, 4, 22, 12, 19, 0, 36, 59, 27, 39, 54, 63, 15, 43, 44, 34, 31, 38, 5, 3, 23, 6, 16, 55, 10, 42, 37, 29, 47, 32, 20, 58, 50, 46, 53, 61, 21, 7, 18, 24, 2, 26, 14, 60, 52, 56, 1, 30]"
