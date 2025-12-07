@@ -1,0 +1,2 @@
+instancia,seed,mu,lambd,taxa_mutacao,taxa_busca_local,iter_sem_melhora_max,custo,tempo_execucao_segundos,memoria_usada_MB,melhor_solucao
+Kra30b,42,5,30,0.4,0.4,5,91900,600.0,121.36,"[0, 10, 11, 15, 16, 2, 1, 4, 5, 25, 3, 14, 24, 23, 29, 8, 12, 27, 7, 6, 9, 13, 19, 21, 17, 20, 22, 26, 28, 18]"

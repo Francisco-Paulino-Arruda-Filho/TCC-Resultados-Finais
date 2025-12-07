@@ -1,3 +1,0 @@
-instancia,seed,mu,lambd,taxa_mutacao,taxa_busca_local,iter_sem_melhora_max,custo,tempo_execucao_segundos,memoria_usada_MB,melhor_solucao
-Rou12,42,5,30,0.4,0.4,5,235528,434.56,107.94,"[5, 4, 10, 8, 1, 7, 2, 0, 11, 6, 3, 9]"
-Rou12,43,5,30,0.4,0.4,5,235852,165.4,107.94,"[11, 5, 7, 3, 4, 10, 2, 9, 1, 0, 8, 6]"

@@ -1,2 +1,0 @@
-instancia,seed,mu,lambd,taxa_mutacao,taxa_busca_local,iter_sem_melhora_max,custo,tempo_execucao_segundos,memoria_usada_MB,melhor_solucao
-Nug24,42,5,30,0.4,0.4,5,3510,600.0,108.32,"[3, 2, 8, 20, 1, 4, 15, 22, 17, 21, 12, 5, 13, 10, 6, 9, 11, 14, 19, 7, 18, 0, 23, 16]"

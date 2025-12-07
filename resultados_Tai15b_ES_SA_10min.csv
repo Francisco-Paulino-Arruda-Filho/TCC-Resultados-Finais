@@ -1,3 +1,0 @@
-instancia,seed,mu,lambd,taxa_mutacao,taxa_busca_local,iter_sem_melhora_max,custo,tempo_execucao_segundos,memoria_usada_MB,melhor_solucao
-Tai15b,42,5,30,0.4,0.4,5,51838283,456.76,107.86,"[14, 4, 8, 6, 11, 12, 13, 0, 1, 5, 10, 3, 2, 7, 9]"
-Tai15b,43,5,30,0.4,0.4,5,51945245,143.23,107.86,"[0, 4, 3, 5, 2, 14, 6, 10, 7, 1, 12, 13, 8, 11, 9]"

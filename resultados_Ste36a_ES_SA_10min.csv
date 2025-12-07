@@ -1,2 +1,0 @@
-instancia,seed,mu,lambd,taxa_mutacao,taxa_busca_local,iter_sem_melhora_max,custo,tempo_execucao_segundos,memoria_usada_MB,melhor_solucao
-Ste36a,42,5,30,0.4,0.4,5,9770,600.0,107.86,"[15, 2, 8, 14, 28, 29, 30, 33, 35, 17, 7, 9, 6, 13, 27, 18, 31, 32, 1, 4, 3, 12, 19, 22, 20, 25, 34, 16, 5, 0, 11, 10, 26, 21, 24, 23]"

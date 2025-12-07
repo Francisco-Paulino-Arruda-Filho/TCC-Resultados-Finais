@@ -1,2 +1,0 @@
-instancia,seed,mu,lambd,taxa_mutacao,taxa_busca_local,iter_sem_melhora_max,custo,tempo_execucao_segundos,memoria_usada_MB,melhor_solucao
-Esc32d,42,5,30,0.4,0.4,5,202,600.0,107.56,"[11, 18, 30, 15, 27, 16, 17, 25, 19, 10, 2, 24, 8, 26, 0, 1, 9, 3, 12, 5, 23, 6, 20, 22, 4, 31, 29, 28, 7, 14, 13, 21]"

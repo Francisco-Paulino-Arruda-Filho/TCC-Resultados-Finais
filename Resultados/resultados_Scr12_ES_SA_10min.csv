@@ -1,0 +1,4 @@
+instancia,seed,mu,lambd,taxa_mutacao,taxa_busca_local,iter_sem_melhora_max,custo,tempo_execucao_segundos,memoria_usada_MB,melhor_solucao
+Scr12,42,5,30,0.4,0.4,5,31410,277.79,107.94,"[7, 5, 10, 9, 1, 8, 4, 0, 11, 6, 3, 2]"
+Scr12,43,5,30,0.4,0.4,5,31410,240.63,107.94,"[10, 5, 2, 1, 9, 0, 4, 8, 3, 6, 11, 7]"
+Scr12,44,5,30,0.4,0.4,5,31410,81.56,107.94,"[1, 6, 9, 10, 2, 11, 7, 3, 8, 5, 0, 4]"

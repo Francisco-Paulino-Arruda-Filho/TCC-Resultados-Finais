@@ -1,2 +1,0 @@
-instancia,seed,mu,lambd,taxa_mutacao,taxa_busca_local,iter_sem_melhora_max,custo,tempo_execucao_segundos,memoria_usada_MB,melhor_solucao
-Lipa50a,42,5,30,0.4,0.4,5,62896,600.0,121.36,"[43, 21, 1, 24, 17, 33, 37, 42, 26, 36, 40, 30, 23, 28, 44, 10, 4, 3, 39, 19, 20, 45, 16, 18, 14, 27, 47, 41, 29, 15, 11, 9, 49, 5, 2, 12, 22, 13, 6, 38, 7, 48, 31, 25, 0, 8, 46, 35, 32, 34]"

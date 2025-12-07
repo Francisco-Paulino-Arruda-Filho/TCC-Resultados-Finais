@@ -1,0 +1,4 @@
+instancia,seed,mu,lambd,taxa_mutacao,taxa_busca_local,iter_sem_melhora_max,custo,tempo_execucao_segundos,memoria_usada_MB,melhor_solucao
+Had14,42,5,30,0.4,0.4,5,2724,296.34,121.36,"[7, 12, 4, 9, 11, 10, 1, 13, 2, 5, 6, 0, 8, 3]"
+Had14,43,5,30,0.4,0.4,5,2724,274.13,121.36,"[7, 12, 9, 10, 11, 4, 1, 13, 2, 5, 6, 0, 8, 3]"
+Had14,44,5,30,0.4,0.4,5,2920,29.53,121.36,"[0, 3, 6, 13, 4, 7, 10, 11, 8, 5, 2, 9, 12, 1]"
