@@ -1,2 +1,0 @@
-instancia,seed,mu,lambd,taxa_mutacao,taxa_busca_local,iter_sem_melhora_max,custo,tempo_execucao_segundos,memoria_usada_MB,melhor_solucao
-Wil50,42,5,30,0.4,0.4,5,49168,600.0,122.39,"[45, 27, 20, 49, 35, 3, 38, 33, 17, 6, 34, 28, 41, 5, 16, 36, 42, 7, 26, 19, 13, 29, 4, 15, 30, 22, 44, 32, 14, 10, 21, 9, 31, 43, 2, 37, 23, 46, 11, 24, 0, 47, 39, 12, 40, 1, 48, 18, 8, 25]"

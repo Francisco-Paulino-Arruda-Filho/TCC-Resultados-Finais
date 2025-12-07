@@ -1,2 +1,0 @@
-instancia,seed,rho,melhor_solucao,custo,tempo_execucao_segundos,memoria_usada_MB,n_formigas,alpha,beta,Q
-Esc16f,42,0.05,"[3, 1, 0, 2, 10, 14, 15, 7, 5, 4, 6, 12, 8, 9, 13, 11]",0,600.01,107.46,10,1.0,2.0,1

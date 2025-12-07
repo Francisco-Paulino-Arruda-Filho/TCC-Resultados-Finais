@@ -1,2 +1,0 @@
-instancia,seed,mu,lambd,taxa_mutacao,taxa_busca_local,iter_sem_melhora_max,custo,tempo_execucao_segundos,memoria_usada_MB,melhor_solucao
-Bur26e,42,5,30,0.4,0.4,5,5387368,600.0,107.56,"[13, 3, 12, 6, 15, 14, 16, 25, 24, 7, 11, 19, 17, 18, 2, 0, 4, 20, 8, 23, 5, 9, 1, 21, 22, 10]"

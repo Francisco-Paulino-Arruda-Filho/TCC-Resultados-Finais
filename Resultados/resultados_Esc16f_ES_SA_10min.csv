@@ -1,2 +1,0 @@
-instancia,seed,mu,lambd,taxa_mutacao,taxa_busca_local,custo,tempo_execucao_segundos,memoria_usada_MB,melhor_solucao
-Esc16f,42,5,30,0.4,0.4,0,600,107.25,"[7, 9, 5, 6, 14, 10, 12, 8, 1, 2, 13, 15, 4, 11, 0, 3]"

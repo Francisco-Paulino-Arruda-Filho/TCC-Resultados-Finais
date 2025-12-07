@@ -1,3 +1,0 @@
-instancia,seed,mu,lambd,taxa_mutacao,taxa_busca_local,iter_sem_melhora_max,custo,tempo_execucao_segundos,memoria_usada_MB,melhor_solucao
-Scr15,42,5,30,0.4,0.4,5,51140,392.75,107.94,"[14, 6, 10, 7, 0, 3, 2, 1, 11, 5, 12, 4, 13, 9, 8]"
-Scr15,43,5,30,0.4,0.4,5,51140,207.24,107.94,"[14, 6, 10, 7, 0, 3, 2, 1, 11, 5, 12, 4, 13, 9, 8]"
