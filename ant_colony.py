@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[10]:
-
-
 import numpy as np
 import random
 import pandas as pd
@@ -11,12 +8,8 @@ import psutil
 import os
 import time
 import glob
-from typing import List, Tuple, Union, Optional
+from typing import List, Tuple, Union
 import csv
-
-
-# In[11]:
-
 
 def calcular_aptidao_qap(
     solucao: Union[List[int], np.ndarray, List[List[int]]],
@@ -38,14 +31,8 @@ def calcular_aptidao_qap(
     return custo
 
 
-# In[12]:
-
-
 def inicializar_feromonio(n: int, valor_inicial: float = 0.1) -> np.ndarray:
     return np.full((n, n), valor_inicial)
-
-
-# In[13]:
 
 
 def construir_solucao_qap(
@@ -54,12 +41,6 @@ def construir_solucao_qap(
     beta: float,
     heuristica: np.ndarray
 ) -> List[int]:
-    """
-    feromonio -> memória coletiva das soluções anteriores 
-    heuristica -> informação local que guia a escolha 
-    alpha -> peso do feromônio
-    beta -> peso da heurística
-    """
     n: int = feromonio.shape[0]
     nao_visitados: List[int] = list(range(n))
     solucao: List[int] = []
@@ -88,9 +69,6 @@ def construir_solucao_qap(
     return solucao
 
 
-# In[14]:
-
-
 def atualizar_feromonio(
     feromonio: np.ndarray,
     solucoes: List[List[int]],
@@ -98,10 +76,10 @@ def atualizar_feromonio(
     rho: float,
     Q: float
 ) -> np.ndarray:
-    feromonio *= (1 - rho)  
+    feromonio *= (1 - rho)
     for solucao, custo in zip(solucoes, custos):
         if custo <= 0 or not np.isfinite(custo):
-            custo = 1e-6 
+            custo = 1e-6
         deposito: float = Q / custo
 
         for i in range(len(solucao) - 1):
@@ -109,48 +87,40 @@ def atualizar_feromonio(
         feromonio[solucao[-1]][solucao[0]] += deposito
     return feromonio
 
-
-# In[15]:
-
-
 def save_aco_iteration_results(
     file_name: str,
     instancia: str,
-    ant_index: int,
-    best_cost: float,
-    current_cost: float,
-    tempo_inicio_global: float
+    formiga: int,
+    melhor_custo: float,
+    custo_atual: float,
+    tempo_decorrido_s: float,
+    memoria_usada_MB: float
 ) -> None:
-    """
-    Salva resultados parciais da execução do ACO em um arquivo CSV no mesmo diretório.
-    """
-    path = file_name  
+    pasta = os.path.dirname(file_name)
+    if pasta and not os.path.exists(pasta):
+        os.makedirs(pasta, exist_ok=True)
 
-    header = [
-        "instancia",
-        "iteracao",
-        "formiga",
-        "melhor_custo",
-        "custo_atual",
-        "tempo_decorrido"
-    ]
-    write_header = not os.path.exists(path)
+    file_exists = os.path.exists(file_name)
 
-    with open(path, mode="a", newline="") as f:
+    with open(file_name, mode="a", newline="") as f:
         writer = csv.writer(f)
-        if write_header:
-            writer.writerow(header)
+        if not file_exists:
+            writer.writerow([
+                "instancia",
+                "formiga",           
+                "melhor_custo",    
+                "custo_atual",       
+                "tempo_decorrido_s",
+                "memoria_usada_MB"
+            ])
         writer.writerow([
             instancia,
-            ant_index,
-            best_cost,
-            current_cost,
-            round(time.time() - tempo_inicio_global, 3)
+            formiga,
+            melhor_custo,
+            custo_atual,
+            round(tempo_decorrido_s, 3),
+            round(memoria_usada_MB, 3)
         ])
-
-
-# In[16]:
-
 
 def aco_qap(
     fluxo: np.ndarray,
@@ -165,6 +135,9 @@ def aco_qap(
     tempo_global_max: float = None
 ) -> Tuple[List[int], int]:
 
+    if tempo_inicio_global is None:
+        tempo_inicio_global = time.time()
+
     n: int = len(fluxo)
     heuristica: np.ndarray = 1 / (np.array(distancia) + 1e-10)
     feromonio: np.ndarray = inicializar_feromonio(n)
@@ -174,18 +147,20 @@ def aco_qap(
 
     file_name = f"Resultados/iteracoes_{instancia}_ACO.csv"
 
-    while True:
+    process = psutil.Process(os.getpid())
 
-        if (time.time() - tempo_inicio_global) >= tempo_global_max:
-            return melhor_solucao if melhor_solucao else [], int(melhor_custo)
+    while True:
+        if tempo_global_max is not None and (time.time() - tempo_inicio_global) >= tempo_global_max:
+            best_cost_int = int(melhor_custo) if np.isfinite(melhor_custo) else -1
+            return melhor_solucao if melhor_solucao else [], best_cost_int
 
         solucoes = []
         custos = []
 
         for j in range(n_formigas):
-
-            if (time.time() - tempo_inicio_global) >= tempo_global_max:
-                return melhor_solucao if melhor_solucao else [], int(melhor_custo)
+            if tempo_global_max is not None and (time.time() - tempo_inicio_global) >= tempo_global_max:
+                best_cost_int = int(melhor_custo) if np.isfinite(melhor_custo) else -1
+                return melhor_solucao if melhor_solucao else [], best_cost_int
 
             s = construir_solucao_qap(feromonio, alpha, beta, heuristica)
             custo = calcular_aptidao_qap(s, fluxo, distancia)
@@ -197,29 +172,39 @@ def aco_qap(
                 melhor_solucao = s
                 melhor_custo = custo
 
+            tempo_decorrido = time.time() - tempo_inicio_global
+            try:
+                memoria_usada = process.memory_info().peak_wset / (1024 * 1024)
+            except AttributeError:
+                memoria_usada = process.memory_info().rss / (1024 * 1024)
+
             save_aco_iteration_results(
                 file_name=file_name,
                 instancia=instancia,
-                ant_index=j,
-                best_cost=melhor_custo,
-                current_cost=custo,
-                tempo_inicio_global=tempo_inicio_global
+                formiga=j,
+                melhor_custo=melhor_custo,
+                custo_atual=custo,
+                tempo_decorrido_s=tempo_decorrido,
+                memoria_usada_MB=memoria_usada
             )
 
         feromonio = atualizar_feromonio(feromonio, solucoes, custos, rho, Q)
 
+        tempo_decorrido = time.time() - tempo_inicio_global
+        try:
+            memoria_usada = process.memory_info().peak_wset / (1024 * 1024)
+        except AttributeError:
+            memoria_usada = process.memory_info().rss / (1024 * 1024)
+
         save_aco_iteration_results(
             file_name=file_name,
             instancia=instancia,
-            ant_index=-1,
-            best_cost=melhor_custo,
-            current_cost=min(custos),
-            tempo_inicio_global=tempo_inicio_global
+            formiga=-1,
+            melhor_custo=melhor_custo,
+            custo_atual=min(custos) if custos else float("inf"),
+            tempo_decorrido_s=tempo_decorrido,
+            memoria_usada_MB=memoria_usada
         )
-
-
-# In[17]:
-
 
 def ler_qap_com_n(caminho: str) -> Tuple[int, pd.DataFrame, pd.DataFrame]:
     with open(caminho, "r") as f:
@@ -240,14 +225,10 @@ def ler_qap_com_n(caminho: str) -> Tuple[int, pd.DataFrame, pd.DataFrame]:
 
     return n, flow_df, dist_df
 
-
-# In[ ]:
-
-
 if __name__ == "__main__":
     arquivos = glob.glob("Instancias/*.txt")
 
-    tempo_global_max = 10 * 60  
+    tempo_global_max = 10 * 60  # segundos (10 minutos)
 
     for arquivo in arquivos:
         nome_instancia = os.path.splitext(os.path.basename(arquivo))[0]
@@ -263,10 +244,7 @@ if __name__ == "__main__":
         random.seed(seed)
         np.random.seed(seed)
 
-        rho_value = 0.05 
-        process = psutil.Process(os.getpid())
-
-        tempo_inicio_seed = time.time()
+        rho_value = 0.05
 
         parametros = {
             "n_formigas": 10,
@@ -275,6 +253,10 @@ if __name__ == "__main__":
             "rho": rho_value,
             "Q": 1,
         }
+
+        # garante pasta de resultados
+        if not os.path.exists("Resultados"):
+            os.makedirs("Resultados", exist_ok=True)
 
         melhor_solucao, melhor_custo = aco_qap(
             fluxo=matriz_fluxo,
@@ -288,6 +270,7 @@ if __name__ == "__main__":
         tempo_fim_seed = time.time()
         tempo_execucao = tempo_fim_seed - tempo_inicio_instancia
 
+        process = psutil.Process(os.getpid())
         try:
             memoria_usada = process.memory_info().peak_wset / (1024 * 1024)
         except AttributeError:
@@ -305,12 +288,11 @@ if __name__ == "__main__":
         })
 
         print(
-            f"[{nome_instancia}] Finalizado em 10 minutos. "
+            f"[{nome_instancia}] Finalizado. "
             f"Custo: {melhor_custo} | Memória: {round(memoria_usada, 2)} MB"
         )
 
         df_resultados = pd.DataFrame(resultados)
         df_resultados.to_csv(f"Resultados/resultados_{nome_instancia}_ACO_10min.csv", index=False)
 
-        print(f"\nResultados da instância {nome_instancia} salvos em resultados_{nome_instancia}_ACO_10min.csv")
-
+        print(f"\nResultados da instância {nome_instancia} salvos em Resultados/resultados_{nome_instancia}_ACO_10min.csv")
