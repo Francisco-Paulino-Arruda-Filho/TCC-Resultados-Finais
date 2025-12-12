@@ -55,13 +55,14 @@ def construir_solucao_qap(
                 tau: float = feromonio[ultima][prox] ** alpha
                 eta: float = heuristica[ultima][prox] ** beta
                 pesos.append(tau * eta)
+
             pesos_np: np.ndarray = np.array(pesos, dtype=float)
             if not np.isfinite(pesos_np).all() or pesos_np.sum() <= 0:
                 pesos_np = np.ones_like(pesos_np) / len(pesos_np)
             else:
                 pesos_np /= pesos_np.sum()
-            atual = random.choices(nao_visitados, weights=pesos_np)[0]
 
+            atual = random.choices(nao_visitados, weights=pesos_np)[0]
 
         solucao.append(atual)
         nao_visitados.remove(atual)
@@ -94,7 +95,8 @@ def save_aco_iteration_results(
     melhor_custo: float,
     custo_atual: float,
     tempo_decorrido_s: float,
-    memoria_usada_MB: float
+    memoria_usada_MB: float,
+    permutacao: List[int]
 ) -> None:
     pasta = os.path.dirname(file_name)
     if pasta and not os.path.exists(pasta):
@@ -107,11 +109,12 @@ def save_aco_iteration_results(
         if not file_exists:
             writer.writerow([
                 "instancia",
-                "formiga",           
-                "melhor_custo",    
-                "custo_atual",       
+                "formiga",
+                "melhor_custo",
+                "custo_atual",
                 "tempo_decorrido_s",
-                "memoria_usada_MB"
+                "memoria_usada_MB",
+                "permutacao"
             ])
         writer.writerow([
             instancia,
@@ -119,8 +122,10 @@ def save_aco_iteration_results(
             melhor_custo,
             custo_atual,
             round(tempo_decorrido_s, 3),
-            round(memoria_usada_MB, 3)
+            round(memoria_usada_MB, 3),
+            str(permutacao)
         ])
+
 
 def aco_qap(
     fluxo: np.ndarray,
@@ -158,6 +163,7 @@ def aco_qap(
         custos = []
 
         for j in range(n_formigas):
+
             if tempo_global_max is not None and (time.time() - tempo_inicio_global) >= tempo_global_max:
                 best_cost_int = int(melhor_custo) if np.isfinite(melhor_custo) else -1
                 return melhor_solucao if melhor_solucao else [], best_cost_int
@@ -185,7 +191,8 @@ def aco_qap(
                 melhor_custo=melhor_custo,
                 custo_atual=custo,
                 tempo_decorrido_s=tempo_decorrido,
-                memoria_usada_MB=memoria_usada
+                memoria_usada_MB=memoria_usada,
+                permutacao=s
             )
 
         feromonio = atualizar_feromonio(feromonio, solucoes, custos, rho, Q)
@@ -201,10 +208,12 @@ def aco_qap(
             instancia=instancia,
             formiga=-1,
             melhor_custo=melhor_custo,
-            custo_atual=min(custos) if custos else float("inf"),
+            custo_atual=min(custos),
             tempo_decorrido_s=tempo_decorrido,
-            memoria_usada_MB=memoria_usada
+            memoria_usada_MB=memoria_usada,
+            permutacao=melhor_solucao
         )
+
 
 def ler_qap_com_n(caminho: str) -> Tuple[int, pd.DataFrame, pd.DataFrame]:
     with open(caminho, "r") as f:
@@ -225,10 +234,10 @@ def ler_qap_com_n(caminho: str) -> Tuple[int, pd.DataFrame, pd.DataFrame]:
 
     return n, flow_df, dist_df
 
+
 if __name__ == "__main__":
     arquivos = glob.glob("Instancias/*.txt")
-
-    tempo_global_max = 10 * 60  # segundos (10 minutos)
+    tempo_global_max = 10 * 60  # 10 min
 
     for arquivo in arquivos:
         nome_instancia = os.path.splitext(os.path.basename(arquivo))[0]
@@ -254,7 +263,6 @@ if __name__ == "__main__":
             "Q": 1,
         }
 
-        # garante pasta de resultados
         if not os.path.exists("Resultados"):
             os.makedirs("Resultados", exist_ok=True)
 
