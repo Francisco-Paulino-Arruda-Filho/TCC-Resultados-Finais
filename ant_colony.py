@@ -92,8 +92,7 @@ def save_aco_iteration_results(
     file_name: str,
     instancia: str,
     formiga: int,
-    melhor_custo: float,
-    custo_atual: float,
+    melhor_custo: float,       
     tempo_decorrido_s: float,
     memoria_usada_MB: float,
     permutacao: List[int]
@@ -110,8 +109,7 @@ def save_aco_iteration_results(
             writer.writerow([
                 "instancia",
                 "formiga",
-                "melhor_custo",
-                "custo_atual",
+                "melhor_custo",         
                 "tempo_decorrido_s",
                 "memoria_usada_MB",
                 "permutacao"
@@ -119,13 +117,11 @@ def save_aco_iteration_results(
         writer.writerow([
             instancia,
             formiga,
-            melhor_custo,
-            custo_atual,
+            melhor_custo,                
             round(tempo_decorrido_s, 3),
             round(memoria_usada_MB, 3),
             str(permutacao)
         ])
-
 
 def aco_qap(
     fluxo: np.ndarray,
@@ -188,8 +184,7 @@ def aco_qap(
                 file_name=file_name,
                 instancia=instancia,
                 formiga=j,
-                melhor_custo=melhor_custo,
-                custo_atual=custo,
+                melhor_custo=custo,     
                 tempo_decorrido_s=tempo_decorrido,
                 memoria_usada_MB=memoria_usada,
                 permutacao=s
@@ -207,13 +202,11 @@ def aco_qap(
             file_name=file_name,
             instancia=instancia,
             formiga=-1,
-            melhor_custo=melhor_custo,
-            custo_atual=min(custos),
+            melhor_custo=min(custos), 
             tempo_decorrido_s=tempo_decorrido,
             memoria_usada_MB=memoria_usada,
             permutacao=melhor_solucao
         )
-
 
 def ler_qap_com_n(caminho: str) -> Tuple[int, pd.DataFrame, pd.DataFrame]:
     with open(caminho, "r") as f:
@@ -233,7 +226,6 @@ def ler_qap_com_n(caminho: str) -> Tuple[int, pd.DataFrame, pd.DataFrame]:
     dist_df: pd.DataFrame = pd.DataFrame([dist_flat[i * n : (i + 1) * n] for i in range(n)])
 
     return n, flow_df, dist_df
-
 
 if __name__ == "__main__":
     arquivos = glob.glob("Instancias/*.txt")
