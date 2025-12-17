@@ -99,6 +99,7 @@ def save_aco_iteration_results(
     permutacao: List[int]
 ) -> None:
 
+    global ultimo_tempo_decorrido_s
     if ultimo_tempo_decorrido_s != None and abs(ultimo_tempo_decorrido_s - tempo_decorrido_s) < 2:
         return
     ultimo_tempo_decorrido_s = tempo_decorrido_s

@@ -71,7 +71,7 @@ def save_es_vnd_iteration_results(file_name: str,
     parametros : dict
         Dicionário com parâmetros da execução (mu, lambda, taxas, n, seed etc.).
     """
-
+    global ultimo_tempo_decorrido_s
     if ultimo_tempo_decorrido_s != None and abs(ultimo_tempo_decorrido_s - tempo_decorrido) < 2:
         return
     ultimo_tempo_decorrido_s = tempo_decorrido
