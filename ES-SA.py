@@ -154,7 +154,7 @@ def inicializar_populacao(lambd: int, tamanho: int, seed_base: int = 42) -> List
 
 # In[41]:
 
-
+ultimo_tempo_decorrido_s = None
 def save_es_sa_iteration_results(file_name: str,
                                  instancia: str,
                                  iteration: int,
@@ -167,8 +167,11 @@ def save_es_sa_iteration_results(file_name: str,
     Salva os resultados parciais de uma execução do ES_SA em um arquivo CSV.
     Cria o arquivo com cabeçalho na primeira execução e adiciona novas linhas a cada iteração.
     """
-    file_exists = os.path.isfile(file_name)
+    if(ultimo_tempo_decorrido_s != None and abs(ultimo_tempo_decorrido_s - tempo_decorrido) < 2:
+        return
+    ultimo_tempo_decorrido_s = tempo_decorrido
 
+    file_exists = os.path.isfile(file_name)
     with open(file_name, mode="a", newline="") as f:
         writer = csv.writer(f)
         if not file_exists:

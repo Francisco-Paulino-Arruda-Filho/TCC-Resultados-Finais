@@ -88,6 +88,7 @@ def atualizar_feromonio(
         feromonio[solucao[-1]][solucao[0]] += deposito
     return feromonio
 
+ultimo_tempo_decorrido_s = None
 def save_aco_iteration_results(
     file_name: str,
     instancia: str,
@@ -97,6 +98,11 @@ def save_aco_iteration_results(
     memoria_usada_MB: float,
     permutacao: List[int]
 ) -> None:
+
+    if(ultimo_tempo_decorrido_s != None and abs(ultimo_tempo_decorrido_s - tempo_decorrido_s) < 2:
+        return
+    ultimo_tempo_decorrido_s = tempo_decorrido_s
+
     pasta = os.path.dirname(file_name)
     if pasta and not os.path.exists(pasta):
         os.makedirs(pasta, exist_ok=True)

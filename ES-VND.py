@@ -39,7 +39,7 @@ def permutation_mutation(solucao: List[int]) -> List[int]:
 
 # In[25]:
 
-
+ultimo_tempo_decorrido_s = None
 def save_es_vnd_iteration_results(file_name: str,
                                   instancia: str,
                                   iteration: int,
@@ -71,6 +71,11 @@ def save_es_vnd_iteration_results(file_name: str,
     parametros : dict
         Dicionário com parâmetros da execução (mu, lambda, taxas, n, seed etc.).
     """
+
+    if(ultimo_tempo_decorrido_s != None and abs(ultimo_tempo_decorrido_s - tempo_decorrido) < 2:
+        return
+    ultimo_tempo_decorrido_s = tempo_decorrido
+
     file_exists = os.path.isfile(file_name)
 
     with open(file_name, mode="a", newline="") as f:
