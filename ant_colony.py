@@ -99,7 +99,7 @@ def save_aco_iteration_results(
     permutacao: List[int]
 ) -> None:
 
-    if(ultimo_tempo_decorrido_s != None and abs(ultimo_tempo_decorrido_s - tempo_decorrido_s) < 2:
+    if ultimo_tempo_decorrido_s != None and abs(ultimo_tempo_decorrido_s - tempo_decorrido_s) < 2:
         return
     ultimo_tempo_decorrido_s = tempo_decorrido_s
 

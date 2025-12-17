@@ -167,7 +167,7 @@ def save_es_sa_iteration_results(file_name: str,
     Salva os resultados parciais de uma execução do ES_SA em um arquivo CSV.
     Cria o arquivo com cabeçalho na primeira execução e adiciona novas linhas a cada iteração.
     """
-    if(ultimo_tempo_decorrido_s != None and abs(ultimo_tempo_decorrido_s - tempo_decorrido) < 2:
+    if ultimo_tempo_decorrido_s != None and abs(ultimo_tempo_decorrido_s - tempo_decorrido) < 2:
         return
     ultimo_tempo_decorrido_s = tempo_decorrido
 
